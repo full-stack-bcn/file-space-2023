@@ -1,9 +1,16 @@
-import Image from 'next/image'
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { redirect } from "next/navigation";
+import { cookies } from 'next/headers'
 
-export default function Home() {
+export default async function Home() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) {
+    redirect("/login");
+  }
   return (
     <main>
-      File Space
+      File Space (this is private)
     </main>
   )
 }
