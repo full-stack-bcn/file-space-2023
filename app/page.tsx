@@ -1,6 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
+import SignOutButton from "@/components/SignOutButton";
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
@@ -9,8 +10,9 @@ export default async function Home() {
     redirect("/login");
   }
   return (
-    <main>
-      File Space (this is private)
+    <main className="p-6">
+      <p>Hola, tienes el mail "{data.user.email}"</p>
+      <SignOutButton />
     </main>
   )
 }
