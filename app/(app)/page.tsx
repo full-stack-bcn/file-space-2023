@@ -1,4 +1,4 @@
-import FileList from "@/components/FileList";
+import RootFolder from "@/components/RootFolder";
 import UploadFile from "@/components/UploadFile";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from 'next/headers';
@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <main className="p-6">
       <UploadFile userId={data.user.id} />
-      <FileList userId={data.user.id} />
+      <RootFolder userId={data.user.id} />
     </main>
   )
 }
