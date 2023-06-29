@@ -1,7 +1,7 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import UploadFile from "@/components/UploadFile";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from 'next/headers';
 import { redirect } from "next/navigation";
-import { cookies } from 'next/headers'
-import SignOutButton from "@/components/SignOutButton";
 
 export const revalidate = 0;
 
@@ -13,7 +13,7 @@ export default async function Home() {
   }
   return (
     <main className="p-6">
-      
+      <UploadFile userId={data.user.id} />
     </main>
   )
 }
