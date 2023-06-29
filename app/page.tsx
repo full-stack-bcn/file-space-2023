@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
 import SignOutButton from "@/components/SignOutButton";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase.auth.getUser();
