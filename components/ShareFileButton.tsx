@@ -1,4 +1,4 @@
-import { type FileObject } from "@supabase/storage-js";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import { type FileObject } from "@supabase/storage-js";
 
 type Props = {
   file: FileObject;
@@ -34,7 +34,7 @@ export default function ShareFileButton({ file, className }: Props) {
         </div>
 
         <DialogFooter>
-          <button>Get URL</button>
+          <Button>Get URL</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
