@@ -2,7 +2,7 @@
 
 import { FileObject } from "@supabase/storage-js";
 import FileItem from "./FileItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type Props = {
@@ -20,7 +20,6 @@ export default function FileList({ files, userId }: Props) {
     }
   };
 
-
   const downloadFile = async (path: string) => {
     const { data, error } = await supabase.storage.from("files").download(path);
     if (error) {
@@ -33,6 +32,33 @@ export default function FileList({ files, userId }: Props) {
     a.download = path.split("/").slice(-1)[0];
     a.click();
   };
+
+  const reloadFiles = async () => {
+    const { data, error } = await supabase.storage.from('files').list(userId);
+    if (data) {
+      setFileList(data);
+    }
+  }
+
+  useEffect(() => {
+    // Suscripción (websocket)
+    const channel = supabase
+      .channel("channel")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "storage", table: "objects" },
+        (payload) => {
+          console.log(payload);
+          reloadFiles();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      // Cleanup: cancelar suscripción
+      supabase.removeChannel(channel);
+    }
+  }, [userId]);
 
   return (
     <div className="mt-4">
