@@ -34,11 +34,11 @@ export default function FileList({ files, userId }: Props) {
   };
 
   const reloadFiles = async () => {
-    const { data, error } = await supabase.storage.from('files').list(userId);
+    const { data, error } = await supabase.storage.from("files").list(userId);
     if (data) {
       setFileList(data);
     }
-  }
+  };
 
   useEffect(() => {
     // Suscripción (websocket)
@@ -57,19 +57,23 @@ export default function FileList({ files, userId }: Props) {
     return () => {
       // Cleanup: cancelar suscripción
       supabase.removeChannel(channel);
-    }
+    };
   }, [userId]);
 
   return (
     <div className="mt-4">
-      {fileList.map((file) => (
-        <FileItem
-          key={file.id}
-          file={file}
-          onDownload={() => downloadFile(`${userId}/${file.name}`)}
-          onDelete={() => deleteFile(`${userId}/${file.name}`)}
-        />
-      ))}
+      {fileList.map((file) => {
+        const filePath = `${userId}/${file.name}`;
+        return (
+          <FileItem
+            key={file.id}
+            file={file}
+            path={filePath}
+            onDownload={() => downloadFile(filePath)}
+            onDelete={() => deleteFile(filePath)}
+          />
+        );
+      })}
     </div>
   );
 }

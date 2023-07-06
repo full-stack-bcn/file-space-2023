@@ -7,8 +7,9 @@ type Props = {
   onDownload?: () => void;
   onDelete?: () => void;
   file: FileObject;
+  path: string;
 };
-export default function FileItem({ file, onDelete, onDownload }: Props) {
+export default function FileItem({ file, path, onDelete, onDownload }: Props) {
   return (
     <div
       className={
@@ -19,7 +20,7 @@ export default function FileItem({ file, onDelete, onDownload }: Props) {
     >
       <div className="text-stone-900">{file.name}</div>
       <div className="flex-1"></div>
-      <ShareFileButton file={file} className="invisible group-hover:visible" />
+      <ShareFileButton path={path} file={file} className="invisible group-hover:visible" />
       <div
         className="px-2 invisible group-hover:visible hover:text-black"
         onClick={onDownload}
